@@ -16,7 +16,6 @@ typedef struct arguments {
 } Args;
 
 typedef struct edge {
-  int dest;
   int delay;
   int capacity;
 } Edge;
@@ -35,10 +34,11 @@ int Node_count;
 int Edge_count;
 int Conn_count;
 
-typedef int Pair[2];
-
 // The pair-wise shortest paths
-Pair **shortest_distance;
-Pair **shortest_route;
+vector<vector<int>> shortest_distance;
+vector<vector<int>> shortest_route;
+
+vector<vector<int>> second_distance;
+vector<vector<vector<int>>> second_route;
 
 #endif
