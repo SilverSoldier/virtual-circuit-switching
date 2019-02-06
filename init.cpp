@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Args args;
+Args args = { "topology.txt", "connection.txt", "routingtableoutput.txt", "forwardingtable.txt", "path.txt", 0, 0 };
 vector<vector<Edge>> Topology;
 vector<Conn> Connections;
 int Node_count;
@@ -16,8 +16,8 @@ void parse_args(Args* args, int argc, char* argv[]){
   // Checking number of arguments
   if(argc < 3) {
 	// cout << "Wrong number." << endl;
-	cerr << "Usage: " << argv[0] << " -top <> -conn <> -rt <> -ft <> -path <> -flag hop|dist -p 0|1" << endl;
-	exit(1);
+	// cerr << "Usage: " << argv[0] << " -top <> -conn <> -rt <> -ft <> -path <> -flag hop|dist -p 0|1" << endl;
+	// exit(1);
   }
   for(int i = 1; i < argc; i += 2){
 	string arg_oi = string(argv[i]);
@@ -64,26 +64,28 @@ void parse_topology(char* file_name) {
   infile >> Node_count >> Edge_count;
 
   // Creating adjacency matrix
-  Edge edge = {INT32_MAX, 0};
+  Edge edge = {INT32_MAX, 0, 0};
 
   vector<Edge> init;
   init.assign(Node_count, edge);
   Topology.assign(Node_count, init);
 
   for(int i = 0; i < Node_count; i++){
-	Topology[i][i] = {0, 0};
+	Topology[i][i] = {0, 0, 0};
   }
 
   int from, to, delay, cap;
   for(int i = 0; i < Edge_count; i++){
 	infile >> from >> to >> delay >> cap;
-	edge = {delay, cap};
+	edge = {delay, cap, 0};
 
 	Topology[from][to] = edge;
 	Topology[to][from] = edge;
 
 	// printf("%d->%d, %d, %d\n", from, to, delay, cap);
   }
+
+  infile.close();
 }
 
 /**
@@ -99,5 +101,9 @@ void parse_connections(char* file_name) {
 
   for(int i = 0; i < Conn_count; i++) {
 	infile >> conn.source >> conn.dest >> conn.min >> conn.avg >> conn.max;
+  Connections.push_back(conn);
   }
+
+
+  infile.close();
 }

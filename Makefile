@@ -1,5 +1,12 @@
-main: main.cpp main.h init.o
-	g++ -Wall -g main.cpp main.h init.h init.o -o main
+CC=g++
+OBJ = main.o init.o routing.o connection.o
+LDFLAGS = -g -Wall
 
-init: init.cpp init.h
-	g++ -Wall -g init.cpp init.h -c
+%.o: %.cpp %.h
+	$(CC) $(LDFLAGS) -c -o $@ $< 
+
+main: $(OBJ)
+	$(CC) $(LDFLAGS) -o $@ $^
+
+clean:
+	rm main *.o

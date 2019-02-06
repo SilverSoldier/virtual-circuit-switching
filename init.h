@@ -2,6 +2,7 @@
 #define INIT_H
 
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -18,6 +19,7 @@ typedef struct arguments {
 typedef struct edge {
   int delay;
   int capacity;
+  int last_vcid;
 } Edge;
 
 typedef struct conn {
@@ -26,6 +28,9 @@ typedef struct conn {
   int min;
   int avg;
   int max;
+  string path;
+  string vcid;
+  int cost;
 } Conn;
 
 extern Args args;
