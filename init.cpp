@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Args args = { "topology.txt", "connection.txt", "routingtableoutput.txt", "forwardingtable.txt", "path.txt", 0, 0 };
+Args args = { "topology.txt", "connection.txt", "routingtable.txt", "forwardingtable.txt", "path.txt", 0, 0 };
 vector<vector<Edge>> Topology;
 vector<Conn> Connections;
 int Node_count;
@@ -101,7 +101,8 @@ void parse_connections(char* file_name) {
 
   for(int i = 0; i < Conn_count; i++) {
 	infile >> conn.source >> conn.dest >> conn.min >> conn.avg >> conn.max;
-  Connections.push_back(conn);
+	conn.cost = INT32_MAX;
+	Connections.push_back(conn);
   }
 
 
